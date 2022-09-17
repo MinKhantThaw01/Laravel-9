@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -16,7 +17,12 @@ class AuthController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('/login');
+        $notification = array(
+            'message' => 'User Logout Successfully', 
+            'alert-type' => 'info'
+        );
+
+        return redirect('/login')->with($notification);
     }
 
 
@@ -52,7 +58,38 @@ class AuthController extends Controller
                 $user['profile_image']= $filename;
             }
             $user->save();
-            return redirect()->route('admin.profile');
+
+            $notification = array(
+                'message' => 'Admin Profile Uploaded Successfully', 
+                'alert-type' => 'info'
+            );
+            return redirect()->route('admin.profile')->with($notification);
        }
 
+
+         public function ChangePassword(){
+               return view('admin.admin_change_password');
+           }
+
+          public function UpdatePassword(Request $request){
+                $validateData = $request->validate([
+                    'oldpassword'=> 'required',
+                    'newpassword'=> 'required',
+                    'confirm_password'=> 'required |same:newpassword',
+                ]);
+
+                $hashPassword = Auth::user()->password;
+
+                if(Hash::check($request->oldpassword,$hashPassword)){
+                    $users = User::find(Auth::id());
+                    $users->password = bcrypt($request->newpassword);
+                    $users->save();
+
+                    session()->flash('message',"Password Changed Successfully");
+                    return redirect()->back();
+                }else{
+                    session()->flash('message',"Old Password don't match");
+                    return redirect()->back();
+                }
+            }
 }

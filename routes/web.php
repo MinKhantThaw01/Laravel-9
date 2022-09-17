@@ -28,8 +28,10 @@ Route::controller(AuthController::class)->group(function(){
     Route::get('admin/profile','Profile')->name('admin.profile');
     Route::get('admin/editProfile','EditProfile')->name('admin.editProfile');
     Route::post('store/profile', 'storeProfile')->name('store.profile');
-    
-    Route::get('admin/login','create')->name('admin.login');
-    Route::get('admin/register','register_create')->name('admin.register');
+
+    Route::get('change/password','ChangePassword')->name('change.password');
+    Route::post('update/password', 'UpdatePassword')->name('update.password');
+
+
 
 });

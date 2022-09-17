@@ -74,8 +74,8 @@
                         <span>Authentication</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="{{ route('admin.login') }}">Login</a></li>
-                        <li><a href="{{ route('admin.register') }}">Register</a></li>
+                        <li><a href="">Login</a></li>
+                        <li><a href="">Register</a></li>
                         <li><a href="auth-recoverpw.html">Recover Password</a></li>
                         <li><a href="auth-lock-screen.html">Lock Screen</a></li>
                     </ul>
