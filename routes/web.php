@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Home\HomeSliderController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('fronted.index');
 });
 
 Route::get('/dashboard', function () {
@@ -33,5 +34,11 @@ Route::controller(AuthController::class)->group(function(){
     Route::post('update/password', 'UpdatePassword')->name('update.password');
 
 
+});
 
+Route::controller(HomeSliderController::class)->group(function(){
+    Route::get('home/slider','HomeSlider')->name('home.slider');
+    Route::post('update/slider','UpdateSlider')->name('update.slider');
+
+    
 });
